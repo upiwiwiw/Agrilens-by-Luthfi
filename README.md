@@ -2,46 +2,6 @@
 
 AgriLens adalah aplikasi berbasis Android yang dikembangkan sebagai bagian dari tugas Capstone untuk Studi Independen Bangkit Akademi 2024. Aplikasi ini bertujuan untuk mendeteksi penyakit pada tanaman menggunakan gambar dengan model Machine Learning berbasis TensorFlow Lite. Proyek ini juga merupakan salah satu syarat kelulusan program Bangkit.
 
-## Tujuan Proyek
-Proyek ini bertujuan untuk:
-1. Membantu petani dan pengguna umum dalam mendeteksi penyakit tanaman secara cepat dan akurat melalui gambar.
-2. Memberikan panduan perawatan tanaman berdasarkan penyakit yang terdeteksi.
-3. Menyediakan pengalaman pengguna yang mudah dan praktis melalui fitur bookmark dan integrasi offline.
-
-## Fitur Utama
-- **Deteksi Penyakit Tanaman**: Menggunakan TensorFlow Lite untuk menganalisis gambar tanaman dan mendeteksi penyakit.
-- **Fitur Bookmark**: Pengguna dapat menyimpan hasil deteksi dan nanti akan langsung terlihat di home page.
-- **UI/UX Modern**: Aplikasi dirancang dengan antarmuka yang ramah pengguna untuk memberikan pengalaman terbaik.
-
-## Teknologi yang Digunakan
-- **Android Development**: Kotlin
-- **Machine Learning**: TensorFlow Lite
-- **Cloud API**: Integrasi API untuk mendukung fitur deteksi berbasis cloud
-
-## Cara Kerja
-1. Pengguna mengunggah gambar tanaman melalui aplikasi.
-2. Gambar dianalisis menggunakan model Machine Learning.
-3. Hasil deteksi berupa nama penyakit dan rekomendasi perawatan akan ditampilkan.
-4. Pengguna dapat menyimpan hasil tersebut ke dalam fitur bookmark.
-
-## Skema Fallback Mode
-- Ketika API mengalami gangguan, aplikasi memungkinkan pengguna untuk langsung mengakses fitur utama (deteksi penyakit tanaman) tanpa harus melalui proses login.
-
-## Cara Menjalankan Aplikasi
-1. Clone repository ini ke komputer Anda.
-2. Buka proyek di Android Studio.
-3. Sync Gradle dan jalankan aplikasi di emulator atau perangkat fisik.
-4. Jika API tidak aktif, aplikasi akan otomatis beralih ke mode offline.
-
-## Tim Pengembang
-- **Muhammad Luthfi** (Mobile Development)
-- **Annisa Shafa Brilianty Lebeharia** (Machine Learning)
-- **Farell Hafidz Irkhami** (Machine Learning)
-- **Sinta Ayu Dwi Ardita** (Machine Learning)
-- **Nabilah Salwa Salsabila** (Cloud Computing)
-- **Nur Ahmad Siroj Rohmatillah** (Cloud Computing)
-- **Yusuf Kelvin Siregar** (Mobile Development)
-
 ## Informasi pentiung
 
 jika server pada API down maka gunakan kodingan MainActivity berikut, lalu run pada MainActivty, untuk sekedar mengakses fitur utama.
@@ -133,6 +93,49 @@ jika server pada API down maka gunakan kodingan MainActivity berikut, lalu run p
             }
         }
     }
+
+    
+## Tujuan Proyek
+Proyek ini bertujuan untuk:
+1. Membantu petani dan pengguna umum dalam mendeteksi penyakit tanaman secara cepat dan akurat melalui gambar.
+2. Memberikan panduan perawatan tanaman berdasarkan penyakit yang terdeteksi.
+3. Menyediakan pengalaman pengguna yang mudah dan praktis melalui fitur bookmark dan integrasi offline.
+
+## Fitur Utama
+- **Deteksi Penyakit Tanaman**: Menggunakan TensorFlow Lite untuk menganalisis gambar tanaman dan mendeteksi penyakit.
+- **Fitur Bookmark**: Pengguna dapat menyimpan hasil deteksi dan nanti akan langsung terlihat di home page.
+- **UI/UX Modern**: Aplikasi dirancang dengan antarmuka yang ramah pengguna untuk memberikan pengalaman terbaik.
+
+## Teknologi yang Digunakan
+- **Android Development**: Kotlin
+- **Machine Learning**: TensorFlow Lite
+- **Cloud API**: Integrasi API untuk mendukung fitur deteksi berbasis cloud
+
+## Cara Kerja
+1. Pengguna mengunggah gambar tanaman melalui aplikasi.
+2. Gambar dianalisis menggunakan model Machine Learning.
+3. Hasil deteksi berupa nama penyakit dan rekomendasi perawatan akan ditampilkan.
+4. Pengguna dapat menyimpan hasil tersebut ke dalam fitur bookmark.
+
+## Skema Fallback Mode
+- Ketika API mengalami gangguan, aplikasi memungkinkan pengguna untuk langsung mengakses fitur utama (deteksi penyakit tanaman) tanpa harus melalui proses login.
+
+## Cara Menjalankan Aplikasi
+1. Clone repository ini ke komputer Anda.
+2. Buka proyek di Android Studio.
+3. Sync Gradle dan jalankan aplikasi di emulator atau perangkat fisik.
+4. Jika API tidak aktif, aplikasi akan otomatis beralih ke mode offline.
+
+## Tim Pengembang
+- **Muhammad Luthfi** (Mobile Development)
+- **Annisa Shafa Brilianty Lebeharia** (Machine Learning)
+- **Farell Hafidz Irkhami** (Machine Learning)
+- **Sinta Ayu Dwi Ardita** (Machine Learning)
+- **Nabilah Salwa Salsabila** (Cloud Computing)
+- **Nur Ahmad Siroj Rohmatillah** (Cloud Computing)
+- **Yusuf Kelvin Siregar** (Mobile Development)
+
+
 
 
 
