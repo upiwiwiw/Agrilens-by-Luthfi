@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/homeFragment">
+
+    <!-- Home Fragment -->
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.capstone.view.HomeFragment"
+        android:label="Home">
+        <action
+            android:id="@+id/action_homeFragment_to_scannerFragment"
+            app:destination="@id/scannerFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_resultFragment"
+            app:destination="@id/resultFragment" />
+    </fragment>
+
+    <!-- Scanner Fragment -->
+    <fragment
+        android:id="@+id/scannerFragment"
+        android:name="com.example.capstone.view.ScannerFragment"
+        android:label="Scanner">
+        <action
+            android:id="@+id/action_scannerFragment_to_resultFragment"
+            app:destination="@id/resultFragment" />
+    </fragment>
+
+    <!-- Result Fragment -->
+    <fragment
+        android:id="@+id/resultFragment"
+        android:name="com.example.capstone.view.ResultFragment"
+        android:label="Result">
+        <argument
+            android:name="RESULT_TITLE"
+            app:argType="string"
+            android:defaultValue="Unknown Issue" />
+        <argument
+            android:name="DIAGNOSIS"
+            app:argType="string"
+            android:defaultValue="Unknown Diagnosis" />
+        <argument
+            android:name="RESULT_TREATMENT"
+            app:argType="string"
+            android:defaultValue="No treatment available." />
+        <argument
+            android:name="IMAGE_URI"
+            app:argType="string"
+            android:defaultValue="" />
+    </fragment>
+
+</navigation>

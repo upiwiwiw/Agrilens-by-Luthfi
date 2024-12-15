@@ -1,0 +1,16 @@
+Apple Scab: 0
+Bacterial Spot: 1
+Black Rot: 2
+Cedar Apple Rust: 3
+Cercospora Leaf Spot: 4
+Common Rust: 5
+Early Blight: 6
+Esca (Black Measles): 7
+Healthy: 8
+Late Blight: 9
+Leaf Blight: 10
+Leaf Scorch: 11
+Northern Leaf Blight: 12
+Powdery Mildew: 13
+Septoria Leaf Spot: 14
+Yellow Leaf Curl Virus: 15

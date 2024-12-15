@@ -1,0 +1,144 @@
+<html>
+<head>
+<title>ImageClassifierHelper.kt</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cf8e6d;}
+.s1 { color: #bcbec4;}
+.s2 { color: #bcbec4;}
+.s3 { color: #6aab73;}
+.s4 { color: #2aacb8;}
+.s5 { color: #7a7e85;}
+</style>
+</head>
+<body bgcolor="#1e1f22">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+ImageClassifierHelper.kt</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com</span><span class="s2">.</span><span class="s1">example</span><span class="s2">.</span><span class="s1">capstone</span>
+
+<span class="s1">import android</span><span class="s2">.</span><span class="s1">content</span><span class="s2">.</span><span class="s1">Context</span>
+<span class="s1">import android</span><span class="s2">.</span><span class="s1">graphics</span><span class="s2">.</span><span class="s1">Bitmap</span>
+<span class="s1">import android</span><span class="s2">.</span><span class="s1">graphics</span><span class="s2">.</span><span class="s1">BitmapFactory</span>
+<span class="s1">import android</span><span class="s2">.</span><span class="s1">net</span><span class="s2">.</span><span class="s1">Uri</span>
+<span class="s1">import org</span><span class="s2">.</span><span class="s1">tensorflow</span><span class="s2">.</span><span class="s1">lite</span><span class="s2">.</span><span class="s1">Interpreter</span>
+<span class="s1">import java</span><span class="s2">.</span><span class="s1">io</span><span class="s2">.</span><span class="s1">FileInputStream</span>
+<span class="s1">import java</span><span class="s2">.</span><span class="s1">nio</span><span class="s2">.</span><span class="s1">ByteBuffer</span>
+<span class="s1">import java</span><span class="s2">.</span><span class="s1">nio</span><span class="s2">.</span><span class="s1">ByteOrder</span>
+<span class="s1">import java</span><span class="s2">.</span><span class="s1">nio</span><span class="s2">.</span><span class="s1">MappedByteBuffer</span>
+<span class="s1">import java</span><span class="s2">.</span><span class="s1">nio</span><span class="s2">.</span><span class="s1">channels</span><span class="s2">.</span><span class="s1">FileChannel</span>
+<span class="s1">import kotlin</span><span class="s2">.</span><span class="s1">math</span><span class="s2">.</span><span class="s1">exp</span>
+
+<span class="s0">class </span><span class="s1">ImageClassifierHelper</span><span class="s2">(</span><span class="s1">private </span><span class="s0">val </span><span class="s1">context: Context</span><span class="s2">) {</span>
+
+    <span class="s1">private lateinit </span><span class="s0">var </span><span class="s1">interpreter: Interpreter</span>
+
+    <span class="s1">init </span><span class="s2">{</span>
+        <span class="s1">setupImageClassifier</span><span class="s2">()</span>
+    <span class="s2">}</span>
+
+    <span class="s0">interface </span><span class="s1">ClassifierListener </span><span class="s2">{</span>
+        <span class="s0">fun </span><span class="s1">onResult</span><span class="s2">(</span><span class="s1">result: String</span><span class="s2">, </span><span class="s1">confidence: Float</span><span class="s2">)</span>
+        <span class="s0">fun </span><span class="s1">onError</span><span class="s2">(</span><span class="s1">error: String</span><span class="s2">)</span>
+    <span class="s2">}</span>
+
+    <span class="s1">private </span><span class="s0">fun </span><span class="s1">setupImageClassifier</span><span class="s2">() {</span>
+        <span class="s0">val </span><span class="s1">model </span><span class="s2">= </span><span class="s1">loadModelFile</span><span class="s2">(</span><span class="s1">context</span><span class="s2">)</span>
+        <span class="s0">val </span><span class="s1">options </span><span class="s2">= </span><span class="s1">Interpreter</span><span class="s2">.</span><span class="s1">Options</span><span class="s2">()</span>
+        <span class="s1">interpreter </span><span class="s2">= </span><span class="s1">Interpreter</span><span class="s2">(</span><span class="s1">model</span><span class="s2">, </span><span class="s1">options</span><span class="s2">)</span>
+    <span class="s2">}</span>
+
+    <span class="s1">private </span><span class="s0">fun </span><span class="s1">loadModelFile</span><span class="s2">(</span><span class="s1">context: Context</span><span class="s2">)</span><span class="s1">: MappedByteBuffer </span><span class="s2">{</span>
+        <span class="s0">val </span><span class="s1">assetFileDescriptor </span><span class="s2">= </span><span class="s1">context</span><span class="s2">.</span><span class="s1">assets</span><span class="s2">.</span><span class="s1">openFd</span><span class="s2">(</span><span class="s3">&quot;ml/cancer_classification.tflite&quot;</span><span class="s2">)</span>
+        <span class="s0">val </span><span class="s1">inputStream </span><span class="s2">= </span><span class="s1">FileInputStream</span><span class="s2">(</span><span class="s1">assetFileDescriptor</span><span class="s2">.</span><span class="s1">fileDescriptor</span><span class="s2">)</span>
+        <span class="s0">val </span><span class="s1">fileChannel </span><span class="s2">= </span><span class="s1">inputStream</span><span class="s2">.</span><span class="s1">channel</span>
+        <span class="s0">return </span><span class="s1">fileChannel</span><span class="s2">.</span><span class="s1">map</span><span class="s2">(</span><span class="s1">FileChannel</span><span class="s2">.</span><span class="s1">MapMode</span><span class="s2">.</span><span class="s1">READ_ONLY</span><span class="s2">, </span><span class="s1">assetFileDescriptor</span><span class="s2">.</span><span class="s1">startOffset</span><span class="s2">, </span><span class="s1">assetFileDescriptor</span><span class="s2">.</span><span class="s1">declaredLength</span><span class="s2">)</span>
+    <span class="s2">}</span>
+
+    <span class="s0">fun </span><span class="s1">classifyStaticImage</span><span class="s2">(</span><span class="s1">imageUri: Uri</span><span class="s2">, </span><span class="s1">listener: ClassifierListener</span><span class="s2">) {</span>
+        <span class="s0">try </span><span class="s2">{</span>
+            <span class="s0">val </span><span class="s1">inputStream </span><span class="s2">= </span><span class="s1">context</span><span class="s2">.</span><span class="s1">contentResolver</span><span class="s2">.</span><span class="s1">openInputStream</span><span class="s2">(</span><span class="s1">imageUri</span><span class="s2">)</span>
+            <span class="s0">val </span><span class="s1">bitmap </span><span class="s2">= </span><span class="s1">BitmapFactory</span><span class="s2">.</span><span class="s1">decodeStream</span><span class="s2">(</span><span class="s1">inputStream</span><span class="s2">)</span>
+            <span class="s1">inputStream?</span><span class="s2">.</span><span class="s1">close</span><span class="s2">()</span>
+
+            <span class="s0">if </span><span class="s2">(</span><span class="s1">bitmap </span><span class="s2">== </span><span class="s0">null</span><span class="s2">) {</span>
+                <span class="s1">listener</span><span class="s2">.</span><span class="s1">onError</span><span class="s2">(</span><span class="s3">&quot;Failed to load image&quot;</span><span class="s2">)</span>
+                <span class="s0">return</span>
+            <span class="s2">}</span>
+
+            <span class="s0">val </span><span class="s1">resizedBitmap </span><span class="s2">= </span><span class="s1">preprocessImage</span><span class="s2">(</span><span class="s1">bitmap</span><span class="s2">)</span>
+            <span class="s0">val </span><span class="s1">inputBuffer </span><span class="s2">= </span><span class="s1">convertBitmapToByteBuffer</span><span class="s2">(</span><span class="s1">resizedBitmap</span><span class="s2">)</span>
+
+            <span class="s0">val </span><span class="s1">outputBuffer </span><span class="s2">= </span><span class="s1">Array</span><span class="s2">(</span><span class="s4">1</span><span class="s2">) { </span><span class="s1">FloatArray</span><span class="s2">(</span><span class="s4">2</span><span class="s2">) }</span>
+            <span class="s1">interpreter</span><span class="s2">.</span><span class="s1">run</span><span class="s2">(</span><span class="s1">inputBuffer</span><span class="s2">, </span><span class="s1">outputBuffer</span><span class="s2">)</span>
+
+            <span class="s0">val </span><span class="s1">result </span><span class="s2">= </span><span class="s1">processResults</span><span class="s2">(</span><span class="s1">outputBuffer</span><span class="s2">[</span><span class="s4">0</span><span class="s2">])</span>
+            <span class="s1">listener</span><span class="s2">.</span><span class="s1">onResult</span><span class="s2">(</span><span class="s1">result</span><span class="s2">.</span><span class="s1">first</span><span class="s2">, </span><span class="s1">result</span><span class="s2">.</span><span class="s1">second</span><span class="s2">)</span>
+
+        <span class="s2">} </span><span class="s1">catch </span><span class="s2">(</span><span class="s1">e: Exception</span><span class="s2">) {</span>
+            <span class="s1">listener</span><span class="s2">.</span><span class="s1">onError</span><span class="s2">(</span><span class="s3">&quot;Error processing image: </span><span class="s0">${</span><span class="s1">e</span><span class="s2">.</span><span class="s1">message</span><span class="s0">}</span><span class="s3">&quot;</span><span class="s2">)</span>
+        <span class="s2">}</span>
+    <span class="s2">}</span>
+
+    <span class="s1">private </span><span class="s0">fun </span><span class="s1">preprocessImage</span><span class="s2">(</span><span class="s1">bitmap: Bitmap</span><span class="s2">)</span><span class="s1">: Bitmap </span><span class="s2">{</span>
+        <span class="s0">val </span><span class="s1">originalWidth </span><span class="s2">= </span><span class="s1">bitmap</span><span class="s2">.</span><span class="s1">width</span>
+        <span class="s0">val </span><span class="s1">originalHeight </span><span class="s2">= </span><span class="s1">bitmap</span><span class="s2">.</span><span class="s1">height</span>
+        <span class="s0">val </span><span class="s1">targetSize </span><span class="s2">= </span><span class="s1">IMG_SIZE</span>
+
+        <span class="s0">val </span><span class="s1">scale </span><span class="s2">= </span><span class="s1">targetSize</span><span class="s2">.</span><span class="s1">toFloat</span><span class="s2">() / </span><span class="s1">maxOf</span><span class="s2">(</span><span class="s1">originalWidth</span><span class="s2">, </span><span class="s1">originalHeight</span><span class="s2">)</span>
+        <span class="s0">val </span><span class="s1">scaledWidth </span><span class="s2">= (</span><span class="s1">originalWidth </span><span class="s2">* </span><span class="s1">scale</span><span class="s2">).</span><span class="s1">toInt</span><span class="s2">()</span>
+        <span class="s0">val </span><span class="s1">scaledHeight </span><span class="s2">= (</span><span class="s1">originalHeight </span><span class="s2">* </span><span class="s1">scale</span><span class="s2">).</span><span class="s1">toInt</span><span class="s2">()</span>
+
+        <span class="s0">return </span><span class="s1">Bitmap</span><span class="s2">.</span><span class="s1">createScaledBitmap</span><span class="s2">(</span><span class="s1">bitmap</span><span class="s2">, </span><span class="s1">scaledWidth</span><span class="s2">, </span><span class="s1">scaledHeight</span><span class="s2">, </span><span class="s0">true</span><span class="s2">)</span>
+    <span class="s2">}</span>
+
+    <span class="s1">private </span><span class="s0">fun </span><span class="s1">convertBitmapToByteBuffer</span><span class="s2">(</span><span class="s1">bitmap: Bitmap</span><span class="s2">)</span><span class="s1">: ByteBuffer </span><span class="s2">{</span>
+        <span class="s0">val </span><span class="s1">byteBuffer </span><span class="s2">= </span><span class="s1">ByteBuffer</span><span class="s2">.</span><span class="s1">allocateDirect</span><span class="s2">(</span><span class="s4">4 </span><span class="s2">* </span><span class="s1">IMG_SIZE </span><span class="s2">* </span><span class="s1">IMG_SIZE </span><span class="s2">* </span><span class="s4">3</span><span class="s2">)</span>
+        <span class="s1">byteBuffer</span><span class="s2">.</span><span class="s1">order</span><span class="s2">(</span><span class="s1">ByteOrder</span><span class="s2">.</span><span class="s1">nativeOrder</span><span class="s2">())</span>
+
+        <span class="s0">val </span><span class="s1">pixels </span><span class="s2">= </span><span class="s1">IntArray</span><span class="s2">(</span><span class="s1">bitmap</span><span class="s2">.</span><span class="s1">width </span><span class="s2">* </span><span class="s1">bitmap</span><span class="s2">.</span><span class="s1">height</span><span class="s2">)</span>
+        <span class="s1">bitmap</span><span class="s2">.</span><span class="s1">getPixels</span><span class="s2">(</span><span class="s1">pixels</span><span class="s2">, </span><span class="s4">0</span><span class="s2">, </span><span class="s1">bitmap</span><span class="s2">.</span><span class="s1">width</span><span class="s2">, </span><span class="s4">0</span><span class="s2">, </span><span class="s4">0</span><span class="s2">, </span><span class="s1">bitmap</span><span class="s2">.</span><span class="s1">width</span><span class="s2">, </span><span class="s1">bitmap</span><span class="s2">.</span><span class="s1">height</span><span class="s2">)</span>
+
+        <span class="s0">for </span><span class="s2">(</span><span class="s1">pixel </span><span class="s0">in </span><span class="s1">pixels</span><span class="s2">) {</span>
+            <span class="s0">val </span><span class="s1">r </span><span class="s2">= (</span><span class="s1">pixel shr </span><span class="s4">16 </span><span class="s1">and </span><span class="s4">0xFF</span><span class="s2">)</span>
+            <span class="s0">val </span><span class="s1">g </span><span class="s2">= (</span><span class="s1">pixel shr </span><span class="s4">8 </span><span class="s1">and </span><span class="s4">0xFF</span><span class="s2">)</span>
+            <span class="s0">val </span><span class="s1">b </span><span class="s2">= (</span><span class="s1">pixel and </span><span class="s4">0xFF</span><span class="s2">)</span>
+
+            <span class="s1">byteBuffer</span><span class="s2">.</span><span class="s1">putFloat</span><span class="s2">((</span><span class="s1">r </span><span class="s2">- </span><span class="s4">127.5f</span><span class="s2">) / </span><span class="s4">127.5f</span><span class="s2">)</span>
+            <span class="s1">byteBuffer</span><span class="s2">.</span><span class="s1">putFloat</span><span class="s2">((</span><span class="s1">g </span><span class="s2">- </span><span class="s4">127.5f</span><span class="s2">) / </span><span class="s4">127.5f</span><span class="s2">)</span>
+            <span class="s1">byteBuffer</span><span class="s2">.</span><span class="s1">putFloat</span><span class="s2">((</span><span class="s1">b </span><span class="s2">- </span><span class="s4">127.5f</span><span class="s2">) / </span><span class="s4">127.5f</span><span class="s2">)</span>
+        <span class="s2">}</span>
+
+        <span class="s0">return </span><span class="s1">byteBuffer</span>
+    <span class="s2">}</span>
+
+    <span class="s1">private </span><span class="s0">fun </span><span class="s1">processResults</span><span class="s2">(</span><span class="s1">outputs: FloatArray</span><span class="s2">)</span><span class="s1">: Pair</span><span class="s2">&lt;</span><span class="s1">String</span><span class="s2">, </span><span class="s1">Float</span><span class="s2">&gt; {</span>
+        <span class="s0">val </span><span class="s1">nonCancerConfidence </span><span class="s2">= </span><span class="s1">outputs</span><span class="s2">[</span><span class="s4">0</span><span class="s2">]</span>
+        <span class="s0">val </span><span class="s1">cancerConfidence </span><span class="s2">= </span><span class="s1">outputs</span><span class="s2">[</span><span class="s4">1</span><span class="s2">]</span>
+
+        <span class="s5">// Apply softmax to get probabilities</span>
+        <span class="s0">val </span><span class="s1">maxConfidence </span><span class="s2">= </span><span class="s1">maxOf</span><span class="s2">(</span><span class="s1">nonCancerConfidence</span><span class="s2">, </span><span class="s1">cancerConfidence</span><span class="s2">)</span>
+        <span class="s0">val </span><span class="s1">expNonCancer </span><span class="s2">= </span><span class="s1">exp</span><span class="s2">((</span><span class="s1">nonCancerConfidence </span><span class="s2">- </span><span class="s1">maxConfidence</span><span class="s2">).</span><span class="s1">toDouble</span><span class="s2">())</span>
+        <span class="s0">val </span><span class="s1">expCancer </span><span class="s2">= </span><span class="s1">exp</span><span class="s2">((</span><span class="s1">cancerConfidence </span><span class="s2">- </span><span class="s1">maxConfidence</span><span class="s2">).</span><span class="s1">toDouble</span><span class="s2">())</span>
+        <span class="s0">val </span><span class="s1">sum </span><span class="s2">= </span><span class="s1">expNonCancer </span><span class="s2">+ </span><span class="s1">expCancer</span>
+
+        <span class="s0">val </span><span class="s1">nonCancerProb </span><span class="s2">= (</span><span class="s1">expNonCancer </span><span class="s2">/ </span><span class="s1">sum</span><span class="s2">).</span><span class="s1">toFloat</span><span class="s2">()</span>
+        <span class="s0">val </span><span class="s1">cancerProb </span><span class="s2">= (</span><span class="s1">expCancer </span><span class="s2">/ </span><span class="s1">sum</span><span class="s2">).</span><span class="s1">toFloat</span><span class="s2">()</span>
+
+        <span class="s5">// Return label with highest confidence</span>
+        <span class="s0">return if </span><span class="s2">(</span><span class="s1">cancerProb </span><span class="s2">&gt; </span><span class="s1">nonCancerProb</span><span class="s2">) {</span>
+            <span class="s3">&quot;Cancer&quot; </span><span class="s1">to cancerProb</span>
+        <span class="s2">} </span><span class="s0">else </span><span class="s2">{</span>
+            <span class="s3">&quot;Non-Cancer&quot; </span><span class="s1">to nonCancerProb</span>
+        <span class="s2">}</span>
+    <span class="s2">}</span>
+
+    <span class="s1">companion </span><span class="s0">object </span><span class="s2">{</span>
+        <span class="s1">private const </span><span class="s0">val </span><span class="s1">IMG_SIZE </span><span class="s2">= </span><span class="s4">224</span>
+    <span class="s2">}</span>
+<span class="s2">}</span>
+</pre>
+</body>
+</html>

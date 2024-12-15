@@ -1,0 +1,223 @@
+<html>
+<head>
+<title>fragment_home.xml</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #d5b778;}
+.s1 { color: #bcbec4;}
+.s2 { color: #6aab73;}
+.s3 { color: #bcbec4;}
+.s4 { color: #7a7e85;}
+</style>
+</head>
+<body bgcolor="#1e1f22">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+fragment_home.xml</font>
+</center></td></tr></table>
+<pre><span class="s0">&lt;?</span><span class="s1">xml version</span><span class="s2">=&quot;1.0&quot; </span><span class="s1">encoding</span><span class="s2">=&quot;utf-8&quot;</span><span class="s0">?&gt;</span>
+<span class="s0">&lt;RelativeLayout</span>
+    <span class="s1">xmlns:android</span><span class="s2">=&quot;http://schemas.android.com/apk/res/android&quot;</span>
+    <span class="s1">xmlns:app</span><span class="s2">=&quot;http://schemas.android.com/apk/res-auto&quot;</span>
+    <span class="s1">android:layout_width</span><span class="s2">=&quot;match_parent&quot;</span>
+    <span class="s1">android:layout_height</span><span class="s2">=&quot;match_parent&quot;</span>
+    <span class="s1">android:background</span><span class="s2">=&quot;#FFFFFF&quot;</span><span class="s0">&gt;</span>
+
+    <span class="s4">&lt;!-- Header Container --&gt;</span>
+    <span class="s0">&lt;RelativeLayout</span>
+        <span class="s1">android:id</span><span class="s2">=&quot;@+id/header_container&quot;</span>
+        <span class="s1">android:layout_width</span><span class="s2">=&quot;match_parent&quot;</span>
+        <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+        <span class="s1">android:padding</span><span class="s2">=&quot;16dp&quot;</span><span class="s0">&gt;</span>
+
+        <span class="s4">&lt;!-- App Name --&gt;</span>
+        <span class="s0">&lt;TextView</span>
+            <span class="s1">android:id</span><span class="s2">=&quot;@+id/capstone_tv_app_name&quot;</span>
+            <span class="s1">android:layout_width</span><span class="s2">=&quot;wrap_content&quot;</span>
+            <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+            <span class="s1">android:layout_centerInParent</span><span class="s2">=&quot;true&quot;</span>
+            <span class="s1">android:fontFamily</span><span class="s2">=&quot;serif&quot;</span>
+            <span class="s1">android:text</span><span class="s2">=&quot;AGRILENS&quot;</span>
+            <span class="s1">android:textColor</span><span class="s2">=&quot;#1B5E20&quot;</span>
+            <span class="s1">android:textSize</span><span class="s2">=&quot;24sp&quot;</span>
+            <span class="s1">android:textStyle</span><span class="s2">=&quot;bold&quot; </span><span class="s0">/&gt;</span>
+
+        <span class="s4">&lt;!-- User Avatar --&gt;</span>
+        <span class="s0">&lt;ImageView</span>
+            <span class="s1">android:id</span><span class="s2">=&quot;@+id/capstone_iv_user_avatar&quot;</span>
+            <span class="s1">android:layout_width</span><span class="s2">=&quot;40dp&quot;</span>
+            <span class="s1">android:layout_height</span><span class="s2">=&quot;40dp&quot;</span>
+            <span class="s1">android:layout_alignParentEnd</span><span class="s2">=&quot;true&quot;</span>
+            <span class="s1">android:layout_marginEnd</span><span class="s2">=&quot;8dp&quot;</span>
+            <span class="s1">android:layout_centerVertical</span><span class="s2">=&quot;true&quot;</span>
+            <span class="s1">android:src</span><span class="s2">=&quot;@drawable/ic_user_girl&quot;</span>
+            <span class="s1">android:background</span><span class="s2">=&quot;@drawable/circle_background&quot;</span>
+            <span class="s1">android:contentDescription</span><span class="s2">=&quot;User Avatar&quot; </span><span class="s0">/&gt;</span>
+    <span class="s0">&lt;/RelativeLayout&gt;</span>
+
+    <span class="s4">&lt;!-- Content ScrollView --&gt;</span>
+    <span class="s0">&lt;ScrollView</span>
+        <span class="s1">android:id</span><span class="s2">=&quot;@+id/capstone_scroll_content&quot;</span>
+        <span class="s1">android:layout_width</span><span class="s2">=&quot;match_parent&quot;</span>
+        <span class="s1">android:layout_height</span><span class="s2">=&quot;match_parent&quot;</span>
+        <span class="s1">android:layout_below</span><span class="s2">=&quot;@id/header_container&quot;</span>
+        <span class="s1">android:fillViewport</span><span class="s2">=&quot;true&quot;</span><span class="s0">&gt;</span>
+
+        <span class="s0">&lt;LinearLayout</span>
+            <span class="s1">android:layout_width</span><span class="s2">=&quot;match_parent&quot;</span>
+            <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+            <span class="s1">android:orientation</span><span class="s2">=&quot;vertical&quot;</span>
+            <span class="s1">android:padding</span><span class="s2">=&quot;16dp&quot;</span><span class="s0">&gt;</span>
+
+            <span class="s4">&lt;!-- Scan Your Plants Section --&gt;</span>
+            <span class="s0">&lt;TextView</span>
+                <span class="s1">android:id</span><span class="s2">=&quot;@+id/capstone_tv_section_title&quot;</span>
+                <span class="s1">android:layout_width</span><span class="s2">=&quot;wrap_content&quot;</span>
+                <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                <span class="s1">android:text</span><span class="s2">=&quot;Scan Your Plants!&quot;</span>
+                <span class="s1">android:textSize</span><span class="s2">=&quot;24sp&quot;</span>
+                <span class="s1">android:textStyle</span><span class="s2">=&quot;bold&quot;</span>
+                <span class="s1">android:textColor</span><span class="s2">=&quot;#000000&quot;</span>
+                <span class="s1">android:layout_marginBottom</span><span class="s2">=&quot;16dp&quot; </span><span class="s0">/&gt;</span>
+
+            <span class="s4">&lt;!-- Welcome Card --&gt;</span>
+            <span class="s0">&lt;androidx.cardview.widget.CardView</span>
+                <span class="s1">android:id</span><span class="s2">=&quot;@+id/capstone_card_welcome&quot;</span>
+                <span class="s1">android:layout_width</span><span class="s2">=&quot;match_parent&quot;</span>
+                <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                <span class="s1">android:layout_marginBottom</span><span class="s2">=&quot;24dp&quot;</span>
+                <span class="s1">android:elevation</span><span class="s2">=&quot;4dp&quot;</span>
+                <span class="s1">app:cardCornerRadius</span><span class="s2">=&quot;16dp&quot;</span>
+                <span class="s1">app:cardBackgroundColor</span><span class="s2">=&quot;#E8F5E9&quot;</span><span class="s0">&gt;</span>
+
+                <span class="s0">&lt;RelativeLayout</span>
+                    <span class="s1">android:layout_width</span><span class="s2">=&quot;match_parent&quot;</span>
+                    <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                    <span class="s1">android:padding</span><span class="s2">=&quot;16dp&quot;</span><span class="s0">&gt;</span>
+
+                    <span class="s0">&lt;LinearLayout</span>
+                        <span class="s1">android:layout_width</span><span class="s2">=&quot;match_parent&quot;</span>
+                        <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                        <span class="s1">android:orientation</span><span class="s2">=&quot;vertical&quot;</span>
+                        <span class="s1">android:layout_toStartOf</span><span class="s2">=&quot;@+id/capstone_iv_welcome_illustration&quot;</span><span class="s0">&gt;</span>
+
+                        <span class="s0">&lt;TextView</span>
+                            <span class="s1">android:id</span><span class="s2">=&quot;@+id/capstone_tv_welcome_title&quot;</span>
+                            <span class="s1">android:layout_width</span><span class="s2">=&quot;wrap_content&quot;</span>
+                            <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                            <span class="s1">android:text</span><span class="s2">=&quot;Welcome!&quot;</span>
+                            <span class="s1">android:textSize</span><span class="s2">=&quot;20sp&quot;</span>
+                            <span class="s1">android:textStyle</span><span class="s2">=&quot;bold&quot;</span>
+                            <span class="s1">android:textColor</span><span class="s2">=&quot;#000000&quot; </span><span class="s0">/&gt;</span>
+
+                        <span class="s0">&lt;TextView</span>
+                            <span class="s1">android:id</span><span class="s2">=&quot;@+id/capstone_tv_welcome_description&quot;</span>
+                            <span class="s1">android:layout_width</span><span class="s2">=&quot;wrap_content&quot;</span>
+                            <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                            <span class="s1">android:layout_marginTop</span><span class="s2">=&quot;4dp&quot;</span>
+                            <span class="s1">android:text</span><span class="s2">=&quot;Scan to know information about your plant.&quot;</span>
+                            <span class="s1">android:textSize</span><span class="s2">=&quot;14sp&quot;</span>
+                            <span class="s1">android:textColor</span><span class="s2">=&quot;#666666&quot; </span><span class="s0">/&gt;</span>
+
+                        <span class="s0">&lt;com.google.android.material.button.MaterialButton</span>
+                            <span class="s1">android:id</span><span class="s2">=&quot;@+id/capstone_btn_scan_now&quot;</span>
+                            <span class="s1">android:layout_width</span><span class="s2">=&quot;wrap_content&quot;</span>
+                            <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                            <span class="s1">android:layout_marginTop</span><span class="s2">=&quot;16dp&quot;</span>
+                            <span class="s1">android:text</span><span class="s2">=&quot;Try it in Scan Plant&quot;</span>
+                            <span class="s1">android:textColor</span><span class="s2">=&quot;#FFFFFF&quot;</span>
+                            <span class="s1">android:backgroundTint</span><span class="s2">=&quot;#000000&quot;</span>
+                            <span class="s1">app:cornerRadius</span><span class="s2">=&quot;24dp&quot; </span><span class="s0">/&gt;</span>
+                    <span class="s0">&lt;/LinearLayout&gt;</span>
+
+                    <span class="s0">&lt;ImageView</span>
+                        <span class="s1">android:id</span><span class="s2">=&quot;@+id/capstone_iv_welcome_illustration&quot;</span>
+                        <span class="s1">android:layout_width</span><span class="s2">=&quot;120dp&quot;</span>
+                        <span class="s1">android:layout_height</span><span class="s2">=&quot;120dp&quot;</span>
+                        <span class="s1">android:layout_alignParentEnd</span><span class="s2">=&quot;true&quot;</span>
+                        <span class="s1">android:layout_centerVertical</span><span class="s2">=&quot;true&quot;</span>
+                        <span class="s1">android:src</span><span class="s2">=&quot;@drawable/ic_woman_garden&quot;</span>
+                        <span class="s1">android:contentDescription</span><span class="s2">=&quot;Gardening Illustration&quot; </span><span class="s0">/&gt;</span>
+                <span class="s0">&lt;/RelativeLayout&gt;</span>
+            <span class="s0">&lt;/androidx.cardview.widget.CardView&gt;</span>
+
+            <span class="s4">&lt;!-- Bookmarks Section --&gt;</span>
+            <span class="s0">&lt;TextView</span>
+                <span class="s1">android:id</span><span class="s2">=&quot;@+id/capstone_tv_bookmarks_title&quot;</span>
+                <span class="s1">android:layout_width</span><span class="s2">=&quot;wrap_content&quot;</span>
+                <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                <span class="s1">android:text</span><span class="s2">=&quot;Your Bookmarks&quot;</span>
+                <span class="s1">android:textSize</span><span class="s2">=&quot;20sp&quot;</span>
+                <span class="s1">android:textStyle</span><span class="s2">=&quot;bold&quot;</span>
+                <span class="s1">android:textColor</span><span class="s2">=&quot;#000000&quot;</span>
+                <span class="s1">android:layout_marginBottom</span><span class="s2">=&quot;16dp&quot; </span><span class="s0">/&gt;</span>
+
+            <span class="s4">&lt;!-- Bookmark Items --&gt;</span>
+            <span class="s0">&lt;LinearLayout</span>
+                <span class="s1">android:id</span><span class="s2">=&quot;@+id/capstone_container_bookmarks&quot;</span>
+                <span class="s1">android:layout_width</span><span class="s2">=&quot;match_parent&quot;</span>
+                <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                <span class="s1">android:orientation</span><span class="s2">=&quot;vertical&quot;</span><span class="s0">&gt;</span>
+
+                <span class="s4">&lt;!-- Bookmark Item --&gt;</span>
+                <span class="s0">&lt;androidx.cardview.widget.CardView</span>
+                    <span class="s1">android:layout_width</span><span class="s2">=&quot;match_parent&quot;</span>
+                    <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                    <span class="s1">android:layout_marginBottom</span><span class="s2">=&quot;8dp&quot;</span>
+                    <span class="s1">app:cardCornerRadius</span><span class="s2">=&quot;12dp&quot;</span>
+                    <span class="s1">app:cardElevation</span><span class="s2">=&quot;2dp&quot;</span><span class="s0">&gt;</span>
+
+                    <span class="s0">&lt;LinearLayout</span>
+                        <span class="s1">android:layout_width</span><span class="s2">=&quot;match_parent&quot;</span>
+                        <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                        <span class="s1">android:orientation</span><span class="s2">=&quot;horizontal&quot;</span>
+                        <span class="s1">android:padding</span><span class="s2">=&quot;12dp&quot;</span><span class="s0">&gt;</span>
+
+                        <span class="s0">&lt;ImageView</span>
+                            <span class="s1">android:id</span><span class="s2">=&quot;@+id/capstone_iv_plant_thumbnail&quot;</span>
+                            <span class="s1">android:layout_width</span><span class="s2">=&quot;60dp&quot;</span>
+                            <span class="s1">android:layout_height</span><span class="s2">=&quot;60dp&quot;</span>
+                            <span class="s1">android:scaleType</span><span class="s2">=&quot;centerCrop&quot;</span>
+                            <span class="s1">android:contentDescription</span><span class="s2">=&quot;Plant Thumbnail&quot; </span><span class="s0">/&gt;</span>
+
+                        <span class="s0">&lt;LinearLayout</span>
+                            <span class="s1">android:layout_width</span><span class="s2">=&quot;0dp&quot;</span>
+                            <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                            <span class="s1">android:layout_weight</span><span class="s2">=&quot;1&quot;</span>
+                            <span class="s1">android:orientation</span><span class="s2">=&quot;vertical&quot;</span>
+                            <span class="s1">android:paddingStart</span><span class="s2">=&quot;12dp&quot;</span><span class="s0">&gt;</span>
+
+                            <span class="s0">&lt;TextView</span>
+                                <span class="s1">android:id</span><span class="s2">=&quot;@+id/capstone_tv_plant_name&quot;</span>
+                                <span class="s1">android:layout_width</span><span class="s2">=&quot;wrap_content&quot;</span>
+                                <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                                <span class="s1">android:text</span><span class="s2">=&quot;Plant Name&quot;</span>
+                                <span class="s1">android:textSize</span><span class="s2">=&quot;16sp&quot;</span>
+                                <span class="s1">android:textStyle</span><span class="s2">=&quot;bold&quot;</span>
+                                <span class="s1">android:textColor</span><span class="s2">=&quot;#000000&quot; </span><span class="s0">/&gt;</span>
+
+                            <span class="s0">&lt;TextView</span>
+                                <span class="s1">android:id</span><span class="s2">=&quot;@+id/capstone_tv_plant_diagnose&quot;</span>
+                                <span class="s1">android:layout_width</span><span class="s2">=&quot;wrap_content&quot;</span>
+                                <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                                <span class="s1">android:text</span><span class="s2">=&quot;Plant Diagnose&quot;</span>
+                                <span class="s1">android:textSize</span><span class="s2">=&quot;14sp&quot;</span>
+                                <span class="s1">android:textColor</span><span class="s2">=&quot;#4CAF50&quot; </span><span class="s0">/&gt;</span>
+                        <span class="s0">&lt;/LinearLayout&gt;</span>
+
+                        <span class="s0">&lt;ImageView</span>
+                            <span class="s1">android:id</span><span class="s2">=&quot;@+id/capstone_btn_delete&quot;</span>
+                            <span class="s1">android:layout_width</span><span class="s2">=&quot;24dp&quot;</span>
+                            <span class="s1">android:layout_height</span><span class="s2">=&quot;24dp&quot;</span>
+                            <span class="s1">android:src</span><span class="s2">=&quot;@drawable/ic_trash&quot;</span>
+                            <span class="s1">android:contentDescription</span><span class="s2">=&quot;Delete Bookmark&quot; </span><span class="s0">/&gt;</span>
+                    <span class="s0">&lt;/LinearLayout&gt;</span>
+                <span class="s0">&lt;/androidx.cardview.widget.CardView&gt;</span>
+            <span class="s0">&lt;/LinearLayout&gt;</span>
+        <span class="s0">&lt;/LinearLayout&gt;</span>
+    <span class="s0">&lt;/ScrollView&gt;</span>
+<span class="s0">&lt;/RelativeLayout&gt;</span>
+</pre>
+</body>
+</html>

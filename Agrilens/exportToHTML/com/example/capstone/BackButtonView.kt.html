@@ -1,0 +1,50 @@
+<html>
+<head>
+<title>BackButtonView.kt</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cf8e6d;}
+.s1 { color: #bcbec4;}
+.s2 { color: #bcbec4;}
+.s3 { color: #2aacb8;}
+.s4 { color: #7a7e85;}
+.s5 { color: #6aab73;}
+</style>
+</head>
+<body bgcolor="#1e1f22">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+BackButtonView.kt</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com</span><span class="s2">.</span><span class="s1">example</span><span class="s2">.</span><span class="s1">capstone</span>
+
+<span class="s1">import android</span><span class="s2">.</span><span class="s1">content</span><span class="s2">.</span><span class="s1">Context</span>
+<span class="s1">import android</span><span class="s2">.</span><span class="s1">util</span><span class="s2">.</span><span class="s1">AttributeSet</span>
+<span class="s1">import androidx</span><span class="s2">.</span><span class="s1">appcompat</span><span class="s2">.</span><span class="s1">widget</span><span class="s2">.</span><span class="s1">AppCompatImageButton</span>
+<span class="s1">import android</span><span class="s2">.</span><span class="s1">app</span><span class="s2">.</span><span class="s1">Activity</span>
+
+<span class="s0">class </span><span class="s1">BackButtonView @JvmOverloads constructor</span><span class="s2">(</span>
+    <span class="s1">context: Context</span><span class="s2">,</span>
+    <span class="s1">attrs: AttributeSet? </span><span class="s2">= </span><span class="s0">null</span><span class="s2">,</span>
+    <span class="s1">defStyleAttr: Int </span><span class="s2">= </span><span class="s3">0</span>
+<span class="s2">) </span><span class="s1">: AppCompatImageButton</span><span class="s2">(</span><span class="s1">context</span><span class="s2">, </span><span class="s1">attrs</span><span class="s2">, </span><span class="s1">defStyleAttr</span><span class="s2">) {</span>
+
+    <span class="s1">init </span><span class="s2">{</span>
+        <span class="s4">// Set the drawable icon</span>
+        <span class="s1">setImageResource</span><span class="s2">(</span><span class="s1">R</span><span class="s2">.</span><span class="s1">drawable</span><span class="s2">.</span><span class="s1">ic_arrow_back</span><span class="s2">)</span>
+        <span class="s4">// Add padding for click area</span>
+        <span class="s1">setPadding</span><span class="s2">(</span><span class="s3">12</span><span class="s2">, </span><span class="s3">12</span><span class="s2">, </span><span class="s3">12</span><span class="s2">, </span><span class="s3">12</span><span class="s2">)</span>
+        <span class="s4">// Set content description for accessibility</span>
+        <span class="s1">contentDescription </span><span class="s2">= </span><span class="s5">&quot;Back&quot;</span>
+
+        <span class="s4">// Set default click behavior to go back to the previous screen</span>
+        <span class="s1">setOnClickListener </span><span class="s2">{</span>
+            <span class="s2">(</span><span class="s1">context </span><span class="s0">as? </span><span class="s1">Activity</span><span class="s2">)</span><span class="s1">?</span><span class="s2">.</span><span class="s1">onBackPressed</span><span class="s2">()</span>
+        <span class="s2">}</span>
+    <span class="s2">}</span>
+<span class="s2">}</span>
+
+</pre>
+</body>
+</html>

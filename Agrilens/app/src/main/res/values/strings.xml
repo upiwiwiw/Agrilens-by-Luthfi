@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Agrilens</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="story_img_description">Diagnose 1</string>
+    <string name="delete_bookmark">Bookmark dihapus</string>
+    <string name="password_hint">Input your password</string>
+    <string name="invalid_password">Password to short</string>
+    <string name="invalid_email">Email belum valid</string>
+    <string name="email_hint">Input your email here</string>
+</resources>

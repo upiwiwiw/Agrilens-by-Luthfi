@@ -1,0 +1,105 @@
+<html>
+<head>
+<title>ResultFragment.kt</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cf8e6d;}
+.s1 { color: #bcbec4;}
+.s2 { color: #bcbec4;}
+.s3 { color: #7a7e85;}
+.s4 { color: #6aab73;}
+.s5 { color: #2aacb8;}
+</style>
+</head>
+<body bgcolor="#1e1f22">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+ResultFragment.kt</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com</span><span class="s2">.</span><span class="s1">example</span><span class="s2">.</span><span class="s1">capstone</span>
+
+<span class="s1">import android</span><span class="s2">.</span><span class="s1">net</span><span class="s2">.</span><span class="s1">Uri</span>
+<span class="s1">import android</span><span class="s2">.</span><span class="s1">os</span><span class="s2">.</span><span class="s1">Bundle</span>
+<span class="s1">import android</span><span class="s2">.</span><span class="s1">graphics</span><span class="s2">.</span><span class="s1">Color</span>
+<span class="s1">import android</span><span class="s2">.</span><span class="s1">view</span><span class="s2">.</span><span class="s1">LayoutInflater</span>
+<span class="s1">import android</span><span class="s2">.</span><span class="s1">view</span><span class="s2">.</span><span class="s1">View</span>
+<span class="s1">import android</span><span class="s2">.</span><span class="s1">view</span><span class="s2">.</span><span class="s1">ViewGroup</span>
+<span class="s1">import androidx</span><span class="s2">.</span><span class="s1">fragment</span><span class="s2">.</span><span class="s1">app</span><span class="s2">.</span><span class="s1">Fragment</span>
+<span class="s1">import com</span><span class="s2">.</span><span class="s1">example</span><span class="s2">.</span><span class="s1">capstone</span><span class="s2">.</span><span class="s1">databinding</span><span class="s2">.</span><span class="s1">FragmentResultBinding</span>
+
+<span class="s0">class </span><span class="s1">ResultFragment : Fragment</span><span class="s2">() {</span>
+
+    <span class="s1">private </span><span class="s0">var </span><span class="s1">isBookmarked </span><span class="s2">= </span><span class="s0">false </span><span class="s3">// Status bookmark</span>
+    <span class="s1">private </span><span class="s0">var </span><span class="s1">_binding: FragmentResultBinding? </span><span class="s2">= </span><span class="s0">null</span>
+    <span class="s1">private </span><span class="s0">val </span><span class="s1">binding get</span><span class="s2">() = </span><span class="s1">_binding</span><span class="s2">!!</span>
+
+    <span class="s1">override </span><span class="s0">fun </span><span class="s1">onCreateView</span><span class="s2">(</span>
+        <span class="s1">inflater: LayoutInflater</span><span class="s2">, </span><span class="s1">container: ViewGroup?</span><span class="s2">,</span>
+        <span class="s1">savedInstanceState: Bundle?</span>
+    <span class="s2">)</span><span class="s1">: View </span><span class="s2">{</span>
+        <span class="s1">_binding </span><span class="s2">= </span><span class="s1">FragmentResultBinding</span><span class="s2">.</span><span class="s1">inflate</span><span class="s2">(</span><span class="s1">inflater</span><span class="s2">, </span><span class="s1">container</span><span class="s2">, </span><span class="s0">false</span><span class="s2">)</span>
+
+        <span class="s3">// Tampilkan hasil dari argument</span>
+        <span class="s1">displayResult</span><span class="s2">()</span>
+
+        <span class="s3">// Atur tombol bookmark</span>
+        <span class="s1">setupBookmarkButton</span><span class="s2">()</span>
+
+        <span class="s3">// Tombol back untuk kembali</span>
+        <span class="s1">binding</span><span class="s2">.</span><span class="s1">btnBack</span><span class="s2">.</span><span class="s1">setOnClickListener </span><span class="s2">{</span>
+            <span class="s1">requireActivity</span><span class="s2">().</span><span class="s1">onBackPressed</span><span class="s2">()</span>
+        <span class="s2">}</span>
+
+        <span class="s0">return </span><span class="s1">binding</span><span class="s2">.</span><span class="s1">root</span>
+    <span class="s2">}</span>
+
+    <span class="s1">private </span><span class="s0">fun </span><span class="s1">displayResult</span><span class="s2">() {</span>
+        <span class="s3">// Ambil data dari arguments</span>
+        <span class="s0">val </span><span class="s1">resultTitle </span><span class="s2">= </span><span class="s1">arguments?</span><span class="s2">.</span><span class="s1">getString</span><span class="s2">(</span><span class="s4">&quot;RESULT_TITLE&quot;</span><span class="s2">) </span><span class="s1">?: </span><span class="s4">&quot;Unknown Issue&quot;</span>
+        <span class="s0">val </span><span class="s1">resultConfidence </span><span class="s2">= </span><span class="s1">arguments?</span><span class="s2">.</span><span class="s1">getFloat</span><span class="s2">(</span><span class="s4">&quot;CONFIDENCE&quot;</span><span class="s2">) </span><span class="s1">?: </span><span class="s5">0.0f</span>
+        <span class="s0">val </span><span class="s1">resultDescription </span><span class="s2">= </span><span class="s1">arguments?</span><span class="s2">.</span><span class="s1">getString</span><span class="s2">(</span><span class="s4">&quot;RESULT_DESCRIPTION&quot;</span><span class="s2">) </span><span class="s1">?: </span><span class="s4">&quot;No description available.&quot;</span>
+        <span class="s0">val </span><span class="s1">resultSolution </span><span class="s2">= </span><span class="s1">arguments?</span><span class="s2">.</span><span class="s1">getString</span><span class="s2">(</span><span class="s4">&quot;RESULT_SOLUTION&quot;</span><span class="s2">) </span><span class="s1">?: </span><span class="s4">&quot;No solution provided.&quot;</span>
+        <span class="s0">val </span><span class="s1">imageUriString </span><span class="s2">= </span><span class="s1">arguments?</span><span class="s2">.</span><span class="s1">getString</span><span class="s2">(</span><span class="s4">&quot;IMAGE_URI&quot;</span><span class="s2">)</span>
+
+        <span class="s3">// Tampilkan data ke UI</span>
+        <span class="s1">binding</span><span class="s2">.</span><span class="s1">tvResultTitle</span><span class="s2">.</span><span class="s1">text </span><span class="s2">= </span><span class="s1">resultTitle</span>
+        <span class="s1">binding</span><span class="s2">.</span><span class="s1">tvResultDescription</span><span class="s2">.</span><span class="s1">text </span><span class="s2">=</span>
+            <span class="s4">&quot;</span><span class="s0">$</span><span class="s1">resultDescription </span><span class="s4">(Confidence: </span><span class="s0">${</span><span class="s2">(</span><span class="s1">resultConfidence </span><span class="s2">* </span><span class="s5">100</span><span class="s2">).</span><span class="s1">toInt</span><span class="s2">()</span><span class="s0">}</span><span class="s4">%)&quot;</span>
+        <span class="s1">binding</span><span class="s2">.</span><span class="s1">tvResultSolution</span><span class="s2">.</span><span class="s1">text </span><span class="s2">= </span><span class="s1">resultSolution</span>
+
+        <span class="s3">// Tampilkan gambar jika URI tersedia</span>
+        <span class="s1">imageUriString?</span><span class="s2">.</span><span class="s1">let </span><span class="s2">{</span>
+            <span class="s0">val </span><span class="s1">imageUri </span><span class="s2">= </span><span class="s1">Uri</span><span class="s2">.</span><span class="s1">parse</span><span class="s2">(</span><span class="s1">it</span><span class="s2">)</span>
+            <span class="s1">binding</span><span class="s2">.</span><span class="s1">ivScanImage</span><span class="s2">.</span><span class="s1">setImageURI</span><span class="s2">(</span><span class="s1">imageUri</span><span class="s2">)</span>
+        <span class="s2">} </span><span class="s1">?: run </span><span class="s2">{</span>
+            <span class="s1">binding</span><span class="s2">.</span><span class="s1">ivScanImage</span><span class="s2">.</span><span class="s1">setImageResource</span><span class="s2">(</span><span class="s1">R</span><span class="s2">.</span><span class="s1">drawable</span><span class="s2">.</span><span class="s1">ic_placeholder_image</span><span class="s2">) </span><span class="s3">// Placeholder jika tidak ada gambar</span>
+        <span class="s2">}</span>
+    <span class="s2">}</span>
+
+    <span class="s1">private </span><span class="s0">fun </span><span class="s1">setupBookmarkButton</span><span class="s2">() {</span>
+        <span class="s1">binding</span><span class="s2">.</span><span class="s1">btnBookmark</span><span class="s2">.</span><span class="s1">setOnClickListener </span><span class="s2">{</span>
+            <span class="s0">if </span><span class="s2">(</span><span class="s1">isBookmarked</span><span class="s2">) {</span>
+                <span class="s3">// Jika sudah di-bookmark, ubah ke &quot;Save to Bookmark&quot;</span>
+                <span class="s1">binding</span><span class="s2">.</span><span class="s1">btnBookmark</span><span class="s2">.</span><span class="s1">text </span><span class="s2">= </span><span class="s4">&quot;Save to Bookmark&quot;</span>
+                <span class="s1">binding</span><span class="s2">.</span><span class="s1">btnBookmark</span><span class="s2">.</span><span class="s1">setBackgroundColor</span><span class="s2">(</span><span class="s1">Color</span><span class="s2">.</span><span class="s1">parseColor</span><span class="s2">(</span><span class="s4">&quot;#4CAF50&quot;</span><span class="s2">)) </span><span class="s3">// Hijau</span>
+                <span class="s1">binding</span><span class="s2">.</span><span class="s1">btnBookmark</span><span class="s2">.</span><span class="s1">setTextColor</span><span class="s2">(</span><span class="s1">Color</span><span class="s2">.</span><span class="s1">WHITE</span><span class="s2">)</span>
+                <span class="s1">isBookmarked </span><span class="s2">= </span><span class="s0">false</span>
+            <span class="s2">} </span><span class="s0">else </span><span class="s2">{</span>
+                <span class="s3">// Jika belum di-bookmark, ubah ke &quot;Remove from Bookmark&quot;</span>
+                <span class="s1">binding</span><span class="s2">.</span><span class="s1">btnBookmark</span><span class="s2">.</span><span class="s1">text </span><span class="s2">= </span><span class="s4">&quot;Remove from Bookmark&quot;</span>
+                <span class="s1">binding</span><span class="s2">.</span><span class="s1">btnBookmark</span><span class="s2">.</span><span class="s1">setBackgroundColor</span><span class="s2">(</span><span class="s1">Color</span><span class="s2">.</span><span class="s1">WHITE</span><span class="s2">) </span><span class="s3">// Putih</span>
+                <span class="s1">binding</span><span class="s2">.</span><span class="s1">btnBookmark</span><span class="s2">.</span><span class="s1">setTextColor</span><span class="s2">(</span><span class="s1">Color</span><span class="s2">.</span><span class="s1">parseColor</span><span class="s2">(</span><span class="s4">&quot;#4CAF50&quot;</span><span class="s2">)) </span><span class="s3">// Hijau</span>
+                <span class="s1">isBookmarked </span><span class="s2">= </span><span class="s0">true</span>
+            <span class="s2">}</span>
+        <span class="s2">}</span>
+    <span class="s2">}</span>
+
+    <span class="s1">override </span><span class="s0">fun </span><span class="s1">onDestroyView</span><span class="s2">() {</span>
+        <span class="s0">super</span><span class="s2">.</span><span class="s1">onDestroyView</span><span class="s2">()</span>
+        <span class="s1">_binding </span><span class="s2">= </span><span class="s0">null</span>
+    <span class="s2">}</span>
+<span class="s2">}</span>
+</pre>
+</body>
+</html>

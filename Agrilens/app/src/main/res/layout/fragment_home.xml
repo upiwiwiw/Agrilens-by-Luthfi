@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
+
+    <!-- Header Container -->
+    <RelativeLayout
+        android:id="@+id/header_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <!-- App Name -->
+        <TextView
+            android:id="@+id/capstone_tv_app_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:fontFamily="serif"
+            android:text="AGRILENS"
+            android:textColor="#1B5E20"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+    <!-- Content Area -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/header_container"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Scan Your Plants Section -->
+        <TextView
+            android:id="@+id/capstone_tv_section_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Scan Your Plants!"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="#000000"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Welcome Card -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/capstone_card_welcome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:elevation="4dp"
+            app:cardCornerRadius="16dp"
+            app:cardBackgroundColor="#E8F5E9">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_toStartOf="@+id/capstone_iv_welcome_illustration">
+
+                    <TextView
+                        android:id="@+id/capstone_tv_welcome_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Welcome!"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:textColor="#000000" />
+
+                    <TextView
+                        android:id="@+id/capstone_tv_welcome_description"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="Scan to know information about your plant."
+                        android:textSize="14sp"
+                        android:textColor="#666666" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/capstone_btn_scan_now"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="Try it in Scan Plant"
+                        android:textColor="#FFFFFF"
+                        android:backgroundTint="#000000"
+                        app:cornerRadius="24dp" />
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/capstone_iv_welcome_illustration"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_woman_garden"
+                    android:contentDescription="Gardening Illustration" />
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Bookmarks Section Title -->
+        <TextView
+            android:id="@+id/capstone_tv_bookmarks_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Your Bookmarks"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#000000"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Empty View -->
+        <TextView
+            android:id="@+id/emptyView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="16dp"
+            android:visibility="gone"
+            android:text="No bookmarks available. Start scanning your plants!"
+            android:textSize="16sp"
+            android:textColor="#666666" />
+
+        <!-- RecyclerView for Bookmark Items -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/capstone_rv_bookmarks"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:listitem="@layout/item_bookmark" />
+
+    </LinearLayout>
+</RelativeLayout>

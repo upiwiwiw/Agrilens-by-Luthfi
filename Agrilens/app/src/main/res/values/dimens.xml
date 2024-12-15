@@ -1,0 +1,7 @@
+<resources>
+    <dimen name="bookmark_thumbnail_size">60dp</dimen>
+    <dimen name="bookmark_card_margin">8dp</dimen>
+    <dimen name="bookmark_card_padding">12dp</dimen>
+    <dimen name="bookmark_card_text_padding_start">12dp</dimen>
+    <dimen name="bookmark_delete_icon_size">24dp</dimen>
+</resources>

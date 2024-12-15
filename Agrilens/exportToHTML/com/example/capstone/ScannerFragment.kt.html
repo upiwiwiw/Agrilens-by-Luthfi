@@ -1,0 +1,189 @@
+<html>
+<head>
+<title>ScannerFragment.kt</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cf8e6d;}
+.s1 { color: #bcbec4;}
+.s2 { color: #bcbec4;}
+.s3 { color: #7a7e85;}
+.s4 { color: #6aab73;}
+</style>
+</head>
+<body bgcolor="#1e1f22">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+ScannerFragment.kt</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com</span><span class="s2">.</span><span class="s1">example</span><span class="s2">.</span><span class="s1">capstone</span>
+
+<span class="s1">import android</span><span class="s2">.</span><span class="s1">net</span><span class="s2">.</span><span class="s1">Uri</span>
+<span class="s1">import android</span><span class="s2">.</span><span class="s1">os</span><span class="s2">.</span><span class="s1">Bundle</span>
+<span class="s1">import android</span><span class="s2">.</span><span class="s1">util</span><span class="s2">.</span><span class="s1">Log</span>
+<span class="s1">import android</span><span class="s2">.</span><span class="s1">view</span><span class="s2">.</span><span class="s1">LayoutInflater</span>
+<span class="s1">import android</span><span class="s2">.</span><span class="s1">view</span><span class="s2">.</span><span class="s1">View</span>
+<span class="s1">import android</span><span class="s2">.</span><span class="s1">view</span><span class="s2">.</span><span class="s1">ViewGroup</span>
+<span class="s1">import android</span><span class="s2">.</span><span class="s1">widget</span><span class="s2">.</span><span class="s1">Toast</span>
+<span class="s1">import androidx</span><span class="s2">.</span><span class="s1">camera</span><span class="s2">.</span><span class="s1">core</span><span class="s2">.</span><span class="s1">CameraSelector</span>
+<span class="s1">import androidx</span><span class="s2">.</span><span class="s1">camera</span><span class="s2">.</span><span class="s1">core</span><span class="s2">.</span><span class="s1">ImageCapture</span>
+<span class="s1">import androidx</span><span class="s2">.</span><span class="s1">camera</span><span class="s2">.</span><span class="s1">core</span><span class="s2">.</span><span class="s1">ImageCaptureException</span>
+<span class="s1">import androidx</span><span class="s2">.</span><span class="s1">camera</span><span class="s2">.</span><span class="s1">lifecycle</span><span class="s2">.</span><span class="s1">ProcessCameraProvider</span>
+<span class="s1">import androidx</span><span class="s2">.</span><span class="s1">core</span><span class="s2">.</span><span class="s1">content</span><span class="s2">.</span><span class="s1">ContextCompat</span>
+<span class="s1">import androidx</span><span class="s2">.</span><span class="s1">fragment</span><span class="s2">.</span><span class="s1">app</span><span class="s2">.</span><span class="s1">Fragment</span>
+<span class="s1">import com</span><span class="s2">.</span><span class="s1">example</span><span class="s2">.</span><span class="s1">capstone</span><span class="s2">.</span><span class="s1">databinding</span><span class="s2">.</span><span class="s1">FragmentScannerBinding</span>
+<span class="s1">import java</span><span class="s2">.</span><span class="s1">io</span><span class="s2">.</span><span class="s1">File</span>
+<span class="s1">import java</span><span class="s2">.</span><span class="s1">util</span><span class="s2">.</span><span class="s1">concurrent</span><span class="s2">.</span><span class="s1">ExecutorService</span>
+<span class="s1">import java</span><span class="s2">.</span><span class="s1">util</span><span class="s2">.</span><span class="s1">concurrent</span><span class="s2">.</span><span class="s1">Executors</span>
+
+<span class="s0">class </span><span class="s1">ScannerFragment : Fragment</span><span class="s2">(), </span><span class="s1">ImageClassifierHelper</span><span class="s2">.</span><span class="s1">ClassifierListener </span><span class="s2">{</span>
+    <span class="s1">private </span><span class="s0">var </span><span class="s1">_binding: FragmentScannerBinding? </span><span class="s2">= </span><span class="s0">null</span>
+    <span class="s1">private </span><span class="s0">val </span><span class="s1">binding get</span><span class="s2">() = </span><span class="s1">_binding</span><span class="s2">!!</span>
+
+    <span class="s1">private lateinit </span><span class="s0">var </span><span class="s1">imageCapture: ImageCapture</span>
+    <span class="s1">private lateinit </span><span class="s0">var </span><span class="s1">cameraExecutor: ExecutorService</span>
+    <span class="s1">private lateinit </span><span class="s0">var </span><span class="s1">imageClassifierHelper: ImageClassifierHelper</span>
+    <span class="s1">private </span><span class="s0">var </span><span class="s1">currentImageUri: Uri? </span><span class="s2">= </span><span class="s0">null</span>
+
+    <span class="s1">override </span><span class="s0">fun </span><span class="s1">onCreateView</span><span class="s2">(</span>
+        <span class="s1">inflater: LayoutInflater</span><span class="s2">, </span><span class="s1">container: ViewGroup?</span><span class="s2">,</span>
+        <span class="s1">savedInstanceState: Bundle?</span>
+    <span class="s2">)</span><span class="s1">: View </span><span class="s2">{</span>
+        <span class="s1">_binding </span><span class="s2">= </span><span class="s1">FragmentScannerBinding</span><span class="s2">.</span><span class="s1">inflate</span><span class="s2">(</span><span class="s1">inflater</span><span class="s2">, </span><span class="s1">container</span><span class="s2">, </span><span class="s0">false</span><span class="s2">)</span>
+        <span class="s0">return </span><span class="s1">binding</span><span class="s2">.</span><span class="s1">root</span>
+    <span class="s2">}</span>
+
+    <span class="s1">override </span><span class="s0">fun </span><span class="s1">onViewCreated</span><span class="s2">(</span><span class="s1">view: View</span><span class="s2">, </span><span class="s1">savedInstanceState: Bundle?</span><span class="s2">) {</span>
+        <span class="s0">super</span><span class="s2">.</span><span class="s1">onViewCreated</span><span class="s2">(</span><span class="s1">view</span><span class="s2">, </span><span class="s1">savedInstanceState</span><span class="s2">)</span>
+
+        <span class="s3">// Inisialisasi CameraX</span>
+        <span class="s1">startCamera</span><span class="s2">()</span>
+
+        <span class="s3">// Inisialisasi ImageClassifierHelper</span>
+        <span class="s1">imageClassifierHelper </span><span class="s2">= </span><span class="s1">ImageClassifierHelper</span><span class="s2">(</span><span class="s1">requireContext</span><span class="s2">())</span>
+
+        <span class="s3">// Tombol Open Camera</span>
+        <span class="s1">binding</span><span class="s2">.</span><span class="s1">btnOpenCamera</span><span class="s2">.</span><span class="s1">setOnClickListener </span><span class="s2">{ </span><span class="s1">takePhoto</span><span class="s2">() }</span>
+
+        <span class="s3">// Tombol Scan</span>
+        <span class="s1">binding</span><span class="s2">.</span><span class="s1">btnScan</span><span class="s2">.</span><span class="s1">setOnClickListener </span><span class="s2">{ </span><span class="s1">analyzeImage</span><span class="s2">() }</span>
+
+        <span class="s3">// Executor untuk CameraX</span>
+        <span class="s1">cameraExecutor </span><span class="s2">= </span><span class="s1">Executors</span><span class="s2">.</span><span class="s1">newSingleThreadExecutor</span><span class="s2">()</span>
+    <span class="s2">}</span>
+
+    <span class="s1">private </span><span class="s0">fun </span><span class="s1">startCamera</span><span class="s2">() {</span>
+        <span class="s0">val </span><span class="s1">cameraProviderFuture </span><span class="s2">= </span><span class="s1">ProcessCameraProvider</span><span class="s2">.</span><span class="s1">getInstance</span><span class="s2">(</span><span class="s1">requireContext</span><span class="s2">())</span>
+
+        <span class="s1">cameraProviderFuture</span><span class="s2">.</span><span class="s1">addListener</span><span class="s2">({</span>
+            <span class="s0">val </span><span class="s1">cameraProvider </span><span class="s2">= </span><span class="s1">cameraProviderFuture</span><span class="s2">.</span><span class="s1">get</span><span class="s2">()</span>
+
+            <span class="s3">// Pilih kamera belakang</span>
+            <span class="s0">val </span><span class="s1">cameraSelector </span><span class="s2">= </span><span class="s1">CameraSelector</span><span class="s2">.</span><span class="s1">DEFAULT_BACK_CAMERA</span>
+
+            <span class="s0">try </span><span class="s2">{</span>
+                <span class="s3">// Unbind semua use cases sebelumnya</span>
+                <span class="s1">cameraProvider</span><span class="s2">.</span><span class="s1">unbindAll</span><span class="s2">()</span>
+
+                <span class="s3">// Setup ImageCapture</span>
+                <span class="s1">imageCapture </span><span class="s2">= </span><span class="s1">ImageCapture</span><span class="s2">.</span><span class="s1">Builder</span><span class="s2">().</span><span class="s1">build</span><span class="s2">()</span>
+
+                <span class="s3">// Tidak memerlukan pratinjau di layout ini</span>
+                <span class="s1">cameraProvider</span><span class="s2">.</span><span class="s1">bindToLifecycle</span><span class="s2">(</span>
+                    <span class="s1">viewLifecycleOwner</span><span class="s2">, </span><span class="s1">cameraSelector</span><span class="s2">, </span><span class="s1">imageCapture</span>
+                <span class="s2">)</span>
+            <span class="s2">} </span><span class="s1">catch </span><span class="s2">(</span><span class="s1">e: Exception</span><span class="s2">) {</span>
+                <span class="s1">Log</span><span class="s2">.</span><span class="s1">e</span><span class="s2">(</span><span class="s4">&quot;CameraX&quot;</span><span class="s2">, </span><span class="s4">&quot;Use case binding failed&quot;</span><span class="s2">, </span><span class="s1">e</span><span class="s2">)</span>
+            <span class="s2">}</span>
+        <span class="s2">}, </span><span class="s1">ContextCompat</span><span class="s2">.</span><span class="s1">getMainExecutor</span><span class="s2">(</span><span class="s1">requireContext</span><span class="s2">()))</span>
+    <span class="s2">}</span>
+
+    <span class="s1">private </span><span class="s0">fun </span><span class="s1">takePhoto</span><span class="s2">() {</span>
+        <span class="s0">val </span><span class="s1">photoFile </span><span class="s2">= </span><span class="s1">File</span><span class="s2">(</span>
+            <span class="s1">requireContext</span><span class="s2">().</span><span class="s1">externalMediaDirs</span><span class="s2">.</span><span class="s1">firstOrNull</span><span class="s2">(),</span>
+            <span class="s4">&quot;photo_</span><span class="s0">${</span><span class="s1">System</span><span class="s2">.</span><span class="s1">currentTimeMillis</span><span class="s2">()</span><span class="s0">}</span><span class="s4">.jpg&quot;</span>
+        <span class="s2">)</span>
+
+        <span class="s0">val </span><span class="s1">outputOptions </span><span class="s2">= </span><span class="s1">ImageCapture</span><span class="s2">.</span><span class="s1">OutputFileOptions</span><span class="s2">.</span><span class="s1">Builder</span><span class="s2">(</span><span class="s1">photoFile</span><span class="s2">).</span><span class="s1">build</span><span class="s2">()</span>
+
+        <span class="s1">imageCapture</span><span class="s2">.</span><span class="s1">takePicture</span><span class="s2">(</span>
+            <span class="s1">outputOptions</span><span class="s2">,</span>
+            <span class="s1">ContextCompat</span><span class="s2">.</span><span class="s1">getMainExecutor</span><span class="s2">(</span><span class="s1">requireContext</span><span class="s2">()),</span>
+            <span class="s0">object </span><span class="s1">: ImageCapture</span><span class="s2">.</span><span class="s1">OnImageSavedCallback </span><span class="s2">{</span>
+                <span class="s1">override </span><span class="s0">fun </span><span class="s1">onImageSaved</span><span class="s2">(</span><span class="s1">outputFileResults: ImageCapture</span><span class="s2">.</span><span class="s1">OutputFileResults</span><span class="s2">) {</span>
+                    <span class="s0">val </span><span class="s1">savedUri </span><span class="s2">= </span><span class="s1">Uri</span><span class="s2">.</span><span class="s1">fromFile</span><span class="s2">(</span><span class="s1">photoFile</span><span class="s2">)</span>
+                    <span class="s1">currentImageUri </span><span class="s2">= </span><span class="s1">savedUri</span>
+                    <span class="s1">showImage</span><span class="s2">(</span><span class="s1">savedUri</span><span class="s2">)</span>
+                <span class="s2">}</span>
+
+                <span class="s1">override </span><span class="s0">fun </span><span class="s1">onError</span><span class="s2">(</span><span class="s1">exception: ImageCaptureException</span><span class="s2">) {</span>
+                    <span class="s1">Log</span><span class="s2">.</span><span class="s1">e</span><span class="s2">(</span><span class="s4">&quot;CameraX&quot;</span><span class="s2">, </span><span class="s4">&quot;Photo capture failed: </span><span class="s0">${</span><span class="s1">exception</span><span class="s2">.</span><span class="s1">message</span><span class="s0">}</span><span class="s4">&quot;</span><span class="s2">, </span><span class="s1">exception</span><span class="s2">)</span>
+                    <span class="s1">showToast</span><span class="s2">(</span><span class="s4">&quot;Failed to take photo.&quot;</span><span class="s2">)</span>
+                <span class="s2">}</span>
+            <span class="s2">}</span>
+        <span class="s2">)</span>
+    <span class="s2">}</span>
+
+    <span class="s1">private </span><span class="s0">fun </span><span class="s1">showImage</span><span class="s2">(</span><span class="s1">uri: Uri</span><span class="s2">) {</span>
+        <span class="s3">// Menampilkan gambar di placeholder (iv_scan_image)</span>
+        <span class="s1">binding</span><span class="s2">.</span><span class="s1">ivScanImage</span><span class="s2">.</span><span class="s1">setImageURI</span><span class="s2">(</span><span class="s1">uri</span><span class="s2">)</span>
+
+        <span class="s3">// Aktifkan tombol scan setelah gambar berhasil ditampilkan</span>
+        <span class="s1">binding</span><span class="s2">.</span><span class="s1">btnScan</span><span class="s2">.</span><span class="s1">isEnabled </span><span class="s2">= </span><span class="s0">true</span>
+    <span class="s2">}</span>
+
+    <span class="s1">private </span><span class="s0">fun </span><span class="s1">analyzeImage</span><span class="s2">() {</span>
+        <span class="s0">if </span><span class="s2">(</span><span class="s1">currentImageUri </span><span class="s2">== </span><span class="s0">null</span><span class="s2">) {</span>
+            <span class="s1">showToast</span><span class="s2">(</span><span class="s4">&quot;Please take a photo first&quot;</span><span class="s2">)</span>
+            <span class="s0">return</span>
+        <span class="s2">}</span>
+
+        <span class="s3">// Nonaktifkan tombol scan selama proses analisis</span>
+        <span class="s1">binding</span><span class="s2">.</span><span class="s1">btnScan</span><span class="s2">.</span><span class="s1">isEnabled </span><span class="s2">= </span><span class="s0">false</span>
+
+        <span class="s3">// Kirim gambar ke ImageClassifierHelper untuk dianalisis</span>
+        <span class="s1">imageClassifierHelper</span><span class="s2">.</span><span class="s1">classifyStaticImage</span><span class="s2">(</span><span class="s1">currentImageUri</span><span class="s2">!!, </span><span class="s0">this</span><span class="s2">)</span>
+    <span class="s2">}</span>
+
+    <span class="s1">override </span><span class="s0">fun </span><span class="s1">onResult</span><span class="s2">(</span><span class="s1">result: String</span><span class="s2">, </span><span class="s1">confidence: Float</span><span class="s2">) {</span>
+        <span class="s3">// Aktifkan kembali tombol scan</span>
+        <span class="s1">binding</span><span class="s2">.</span><span class="s1">btnScan</span><span class="s2">.</span><span class="s1">isEnabled </span><span class="s2">= </span><span class="s0">true</span>
+
+        <span class="s3">// Navigasi ke ResultFragment dengan data hasil</span>
+        <span class="s1">moveToResult</span><span class="s2">(</span><span class="s1">result</span><span class="s2">, </span><span class="s1">confidence</span><span class="s2">)</span>
+    <span class="s2">}</span>
+
+    <span class="s1">override </span><span class="s0">fun </span><span class="s1">onError</span><span class="s2">(</span><span class="s1">error: String</span><span class="s2">) {</span>
+        <span class="s3">// Tampilkan error dan aktifkan kembali tombol scan</span>
+        <span class="s1">binding</span><span class="s2">.</span><span class="s1">btnScan</span><span class="s2">.</span><span class="s1">isEnabled </span><span class="s2">= </span><span class="s0">true</span>
+        <span class="s1">showToast</span><span class="s2">(</span><span class="s1">error</span><span class="s2">)</span>
+    <span class="s2">}</span>
+
+    <span class="s1">private </span><span class="s0">fun </span><span class="s1">moveToResult</span><span class="s2">(</span><span class="s1">result: String</span><span class="s2">, </span><span class="s1">confidence: Float</span><span class="s2">) {</span>
+        <span class="s0">val </span><span class="s1">resultFragment </span><span class="s2">= </span><span class="s1">ResultFragment</span><span class="s2">().</span><span class="s1">apply </span><span class="s2">{</span>
+            <span class="s1">arguments </span><span class="s2">= </span><span class="s1">Bundle</span><span class="s2">().</span><span class="s1">apply </span><span class="s2">{</span>
+                <span class="s1">putString</span><span class="s2">(</span><span class="s4">&quot;RESULT_TITLE&quot;</span><span class="s2">, </span><span class="s1">result</span><span class="s2">)</span>
+                <span class="s1">putFloat</span><span class="s2">(</span><span class="s4">&quot;CONFIDENCE&quot;</span><span class="s2">, </span><span class="s1">confidence</span><span class="s2">)</span>
+                <span class="s1">putString</span><span class="s2">(</span><span class="s4">&quot;IMAGE_URI&quot;</span><span class="s2">, </span><span class="s1">currentImageUri</span><span class="s2">.</span><span class="s1">toString</span><span class="s2">())</span>
+            <span class="s2">}</span>
+        <span class="s2">}</span>
+
+        <span class="s1">parentFragmentManager</span><span class="s2">.</span><span class="s1">beginTransaction</span><span class="s2">()</span>
+            <span class="s2">.</span><span class="s1">replace</span><span class="s2">(</span><span class="s1">R</span><span class="s2">.</span><span class="s1">id</span><span class="s2">.</span><span class="s1">nav_host_fragment</span><span class="s2">, </span><span class="s1">resultFragment</span><span class="s2">)</span>
+            <span class="s2">.</span><span class="s1">addToBackStack</span><span class="s2">(</span><span class="s0">null</span><span class="s2">)</span>
+            <span class="s2">.</span><span class="s1">commit</span><span class="s2">()</span>
+    <span class="s2">}</span>
+
+    <span class="s1">private </span><span class="s0">fun </span><span class="s1">showToast</span><span class="s2">(</span><span class="s1">message: String</span><span class="s2">) {</span>
+        <span class="s1">Toast</span><span class="s2">.</span><span class="s1">makeText</span><span class="s2">(</span><span class="s1">requireContext</span><span class="s2">(), </span><span class="s1">message</span><span class="s2">, </span><span class="s1">Toast</span><span class="s2">.</span><span class="s1">LENGTH_SHORT</span><span class="s2">).</span><span class="s1">show</span><span class="s2">()</span>
+    <span class="s2">}</span>
+
+    <span class="s1">override </span><span class="s0">fun </span><span class="s1">onDestroyView</span><span class="s2">() {</span>
+        <span class="s0">super</span><span class="s2">.</span><span class="s1">onDestroyView</span><span class="s2">()</span>
+        <span class="s1">_binding </span><span class="s2">= </span><span class="s0">null</span>
+        <span class="s1">cameraExecutor</span><span class="s2">.</span><span class="s1">shutdown</span><span class="s2">()</span>
+    <span class="s2">}</span>
+<span class="s2">}</span>
+</pre>
+</body>
+</html>

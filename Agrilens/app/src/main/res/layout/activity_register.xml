@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
+
+    <!-- ScrollView for Register content -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_horizontal">
+
+            <!-- Logo -->
+            <TextView
+                android:id="@+id/capstone_logo_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:text="AGRILENS"
+                android:textSize="28sp"
+                android:textStyle="bold"
+                android:textColor="#4CAF50"
+                android:fontFamily="serif" />
+
+            <!-- Register Title -->
+            <TextView
+                android:id="@+id/capstone_register_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:text="Register"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="#000000" />
+
+            <!-- Subtitle -->
+            <TextView
+                android:id="@+id/capstone_register_subtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Create an account to get started"
+                android:textSize="14sp"
+                android:textColor="#888888" />
+
+            <!-- Name Input -->
+            <EditText
+                android:id="@+id/capstone_name_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:hint="Name"
+                android:padding="12dp"
+                android:background="@drawable/edittext_background"
+                android:inputType="textPersonName" />
+
+            <!-- Custom Email Address Input -->
+            <com.example.capstone.customview.MyEmailField
+                android:id="@+id/capstone_email_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:minHeight="48dp" />
+
+            <!-- Custom Password Input -->
+            <com.example.capstone.customview.MyPasswordField
+                android:id="@+id/capstone_password_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:minHeight="48dp" />
+
+            <!-- Custom Confirm Password Input -->
+            <com.example.capstone.customview.MyPasswordField
+                android:id="@+id/capstone_confirm_password_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:minHeight="48dp" />
+
+            <!-- Register Button -->
+            <Button
+                android:id="@+id/capstone_register_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:backgroundTint="#4CAF50"
+                android:text="Register"
+                android:textColor="#FFFFFF"
+                android:padding="12dp"
+                android:fontFamily="sans-serif-medium" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- ProgressBar for loading -->
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:visibility="gone"
+        android:layout_gravity="center" />
+
+    <!-- Overlay background for loading -->
+    <View
+        android:id="@+id/loading_overlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#80000000"
+        android:visibility="gone" />
+</FrameLayout>
