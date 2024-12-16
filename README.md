@@ -6,8 +6,7 @@ AgriLens adalah aplikasi berbasis Android yang dikembangkan sebagai bagian dari 
 
 jika server pada API down maka gunakan kodingan MainActivity berikut, lalu run pada MainActivty, untuk sekedar mengakses fitur utama.
 
-
-## package com.example.capstone
+    package com.example.capstone
 
     import android.os.Bundle
     import android.view.View
