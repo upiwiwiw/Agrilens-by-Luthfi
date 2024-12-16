@@ -2,7 +2,7 @@
 
 AgriLens adalah aplikasi berbasis Android yang dikembangkan sebagai bagian dari tugas Capstone untuk Studi Independen Bangkit Akademi 2024. Aplikasi ini bertujuan untuk mendeteksi penyakit pada tanaman menggunakan gambar dengan model Machine Learning berbasis TensorFlow Lite. Proyek ini juga merupakan salah satu syarat kelulusan program Bangkit.
 
-## Informasi pentiung
+## Informasi penting
 
 jika server pada API down maka gunakan kodingan MainActivity berikut, lalu run pada MainActivty, untuk sekedar mengakses fitur utama.
 
